@@ -6,209 +6,145 @@
     <title>Aesthetic Image Carousel</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FFF0F5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            animation: gradientBG 15s ease infinite;
-            background: linear-gradient(-45deg, #FFF0F5, #FFE4E1, #FFB6C1, #FFC0CB);
-            background-size: 400% 400%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+body {
+    background-color: #FFF0F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    animation: gradientBG 15s ease infinite;
+    background: linear-gradient(-45deg, #FFF0F5, #FFE4E1, #FFB6C1, #FFC0CB);
+    background-size: 400% 400%;
+    padding: 5vw;
+    box-sizing: border-box;
+}
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        .carousel-container {
-            width: 100%;
-            max-width: 100%;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            background-color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+.carousel-container {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
+    background-color: white;
+    height: 600px; /* Increased height */
+    display: flex;
+    flex-direction: column;
+}
 
-        .image-title {
-            text-align: center;
-            padding: clamp(10px, 2vw, 20px);
-            background-color: white;
-            color: #FF69B4;
-            font-weight: 600;
-            font-size: clamp(14px, 4vw, 24px);
-            letter-spacing: 1px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            box-sizing: border-box;
-        }
+.image-title {
+    text-align: center;
+    padding: 1rem;
+    background-color: #FFF5EE;
+    color: #FF69B4;
+    font-weight: 600;
+    font-size: clamp(14px, 2vw, 18px);
+    letter-spacing: 1px;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-height: 80px;
+    overflow: hidden;
+}
 
-        .carousel {
-            flex: 1;
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
+.carousel {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
 
-        .carousel img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            background-color: white;
-        }
+.carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .carousel img.active {
-            opacity: 1;
-        }
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 5%;
+    box-sizing: border-box;
+    pointer-events: none;
+}
 
-        .carousel-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            padding: 0 clamp(10px, 2vw, 20px);
-            box-sizing: border-box;
-            pointer-events: none;
-            z-index: 10;
-        }
+.control-btn {
+    background: rgba(199, 21, 133, 0.7);
+    border: none;
+    color: white;
+    width: clamp(30px, 8vw, 40px);
+    height: clamp(30px, 8vw, 40px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+    pointer-events: auto;
+    font-size: clamp(12px, 3vw, 16px);
+}
 
-        .control-btn {
-            background: rgba(199, 21, 133, 0.7);
-            border: none;
-            color: white;
-            width: clamp(30px, 8vw, 50px);
-            height: clamp(30px, 8vw, 50px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
-            pointer-events: auto;
-            font-size: clamp(16px, 4vw, 24px);
-        }
+.control-btn:hover {
+    background: rgba(199, 21, 133, 0.9);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(199, 21, 133, 0.5);
+}
 
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
 
-        .control-btn:hover {
-            background: rgba(199, 21, 133, 0.9);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.5);
-        }
+    .carousel-container {
+        border-radius: 15px;
+        height: 500px; /* Adjusted for smaller screens */
+    }
+    
+    .image-title {
+        font-size: clamp(12px, 3vw, 16px);
+        max-height: 100px;
+    }
+}
 
-        .control-btn:hover::before {
-            opacity: 1;
-        }
+@media (max-width: 480px) {
+    .carousel-container {
+        max-width: 100%;
+        height: 400px; /* Adjusted for mobile */
+    }
 
-        .control-btn:active {
-            transform: scale(0.95);
-        }
+    .control-btn {
+        width: 30px;
+        height: 30px;
+    }
+}
 
-        .control-btn.prev-btn {
-            animation: slideInLeft 0.5s ease-out;
-        }
+@media (min-width: 1200px) {
+    .carousel-container {
+        max-width: 900px;
+        height: 700px; /* Increased height for large screens */
+    }
+}
 
-        .control-btn.next-btn {
-            animation: slideInRight 0.5s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                transform: translateX(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .carousel-container {
-                height: 90vh;
-            }
-            
-            .image-title {
-                font-size: clamp(12px, 3vw, 18px);
-                padding: clamp(8px, 1.5vw, 15px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .carousel-container {
-                height: 100vh;
-            }
-            
-            .image-title {
-                font-size: clamp(10px, 2.5vw, 16px);
-                padding: clamp(6px, 1vw, 12px);
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .carousel-container {
-                max-width: 800px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .carousel,
-            .control-btn,
-            .indicator {
-                transition: none;
-            }
-
-            body {
-                animation: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -344,6 +280,7 @@
             <button class="control-btn prev-btn">&#9665;</button>
             <button class="control-btn next-btn">&#9655;</button>
         </div>
+        <div class="carousel-indicators"></div>
     </div>
     
     <script>
@@ -351,9 +288,10 @@
             const carousel = document.querySelector('.carousel');
             const prevBtn = document.querySelector('.prev-btn');
             const nextBtn = document.querySelector('.next-btn');
+            const indicatorsContainer = document.querySelector('.carousel-indicators');
             const imageTitle = document.querySelector('.image-title');
 
-            // List of images with their titles (cleaned up to remove duplicates)
+            // List of images with their titles
             const imageData = [
                 { path: 'kyran/kyran (1).jpg', title: 'Wow museo hehe' },
                 { path: 'kyran/kyran (2).jpg', title: 'Love look at me' },
@@ -416,29 +354,110 @@
                 { path: 'kyran/kyran (59).jpg', title: 'Happy bday to me hehe' },
                 { path: 'kyran/kyran (60).jpg', title: 'Kunwari diko alam hehe' },
                 { path: 'kyran/kyran (61).jpg', title: 'Yan yung profile ko sa titer' },
-                { path: 'kyran/kyran (62).jpg', title: 'WOW so wet AHHAHAH' }
+                { path: 'kyran/kyran (62).jpg', title: 'WOW so wet AHHAHAH' },
+
+                { path: 'kyran/kyran (1).jpeg', title: 'Ayan mirror shot pa baby' },
+                { path: 'kyran/kyran (2).jpeg', title: 'Selfie again' },
+                { path: 'kyran/kyran (3).jpeg', title: 'Gym broos ' },
+                { path: 'kyran/kyran (4).jpeg', title: 'WOWOWOWOWO HAHAHA' },
+                { path: 'kyran/kyran (5).jpeg', title: 'AHAHAHAH CHICKEN' },
+                { path: 'kyran/kyran (6).jpeg', title: 'MLEM' },
+                { path: 'kyran/kyran (7).jpeg', title: 'ngoinks mirror shot ulit sana dika magsawa' },
+                { path: 'kyran/kyran (8).jpeg', title: 'Wow nakapambahay lang me look' },
+                { path: 'kyran/kyran (9).jpeg', title: 'WOW SHIRTLESS AHHAHA' },
+                { path: 'kyran/kyran (10).jpeg', title: 'MWAPS' },
+                { path: 'kyran/kyran (11).jpeg', title: 'AHHA FIND MEEE' },
+                { path: 'kyran/kyran (12).jpeg', title: 'coffe coffe dateeee' },
+                { path: 'kyran/kyran (13).jpeg', title: 'wow nakatagilid joke thats a baby me' },
+                { path: 'kyran/kyran (14).jpeg', title: 'WOW ANG LABO' },
+                { path: 'kyran/kyran (15).jpeg', title: 'SMILE SMILE KAPA DIYAN' },
+                { path: 'kyran/kyran (16).jpeg', title: 'Ayan wag ka magsawa my loves' },
+                { path: 'kyran/kyran (17).jpeg', title: 'AHAHA chicken ulit' },
+                { path: 'kyran/kyran (18).jpeg', title: 'hehe christmass' },
+                { path: 'kyran/kyran (19).jpeg', title: 'Pro kuno' },
+                { path: 'kyran/kyran (20).jpeg', title: 'first day ng college' },
+                { path: 'kyran/kyran (21).jpeg', title: 'SIGEEEE ROMANSAHIN MO YUNG SAHIG' },
+                { path: 'kyran/kyran (22).jpeg', title: 'tarsier' },
+                { path: 'kyran/kyran (23).jpeg', title: 'wowwowoow polo' },
+                { path: 'kyran/kyran (24).jpeg', title: 'AHAHHA BABY SORRY' },
+                { path: 'kyran/kyran (25).jpeg', title: 'SIGE PATI MUKHA KO DITO MALABO' },
+                { path: 'kyran/kyran (26).jpeg', title: 'NYEARM' },
+                { path: 'kyran/kyran (27).jpeg', title: 'AYAN GYM BROS ULIT' },
+                { path: 'kyran/kyran (28).jpeg', title: 'sige ojt ulit sawang sawa na marian ko' },
+                { path: 'kyran/kyran (29).jpeg', title: 'AHAHA my sibling btw' },
+                { path: 'kyran/kyran (30).jpeg', title: 'baby ohh hehe I look cute dito sabi mo' },
+                { path: 'kyran/kyran (31).jpeg', title: 'WIIWIW usain bold' },
+                { path: 'kyran/kyran (32).jpeg', title: 'graduate yarn' },
+                { path: 'kyran/kyran (33).jpeg', title: 'wow hair' },
+                { path: 'kyran/kyran (34).jpeg', title: 'EHHEH ano uhm shh mabait ako' },
+                { path: 'kyran/kyran (35).jpeg', title: 'hehe libre ni mharl' },
+                { path: 'kyran/kyran (36).jpeg', title: 'HEHE tangkad ko nohhh' },
+                { path: 'kyran/kyran (37).jpeg', title: 'gokgokgokgok' },
+                { path: 'kyran/kyran (38).jpeg', title: 'ayan may trangkaso' },
+                { path: 'kyran/kyran (39).jpeg', title: 'AHHAHAHAHAHAH EWAN KODIN' },
+                { path: 'kyran/kyran (40).jpeg', title: 'ayan sige lahat malabo' },
+                { path: 'kyran/kyran (41).jpeg', title: 'smile hehe ' },
+                { path: 'kyran/kyran (42).jpeg', title: 'HAGHAGAGAGA CR SA CLINIC' },
+                { path: 'kyran/kyran (43).jpeg', title: 'wowowo suit suit suit' },
+                { path: 'kyran/kyran (44).jpeg', title: 'ayan nahuli payang 7-11 mirror shot' },
+                { path: 'kyran/kyran (45).jpeg', title: 'wowow longsleeves' },
+                { path: 'kyran/kyran (46).jpeg', title: 'AAAAAAAAAAAAAAAA' },
+                { path: 'kyran/kyran (47).jpeg', title: 'ME PATAY NA PATAY SAYO MARIAN KO' },
+                { path: 'kyran/kyran (48).jpeg', title: 'WOWOW MAY SASH HAHAHA' },
+                { path: 'kyran/kyran (49).jpeg', title: 'peace to you my loves' },
+                { path: 'kyran/kyran (50).jpeg', title: 'MWEHIHHIH umberilla lalala' },
+                { path: 'kyran/kyran (51).jpeg', title: 'me nonchalant' },
+                { path: 'kyran/kyran (52).jpeg', title: 'magkikiss talaga kami diyan' },
+                { path: 'kyran/kyran (53).jpeg', title: 'AHAHA love shh dont judge me power ranger ako diyan' },
+                { path: 'kyran/kyran (54).jpeg', title: 'ewan ko bat ko sinama to HAHAHAH panis winstreak I miss playing with you' }
             ];
 
             let currentIndex = 0;
             const totalImages = imageData.length;
 
-            function updateCarousel() {
-                // Remove active class from all images
-                const images = carousel.querySelectorAll('img');
-                images.forEach(img => img.classList.remove('active'));
+            // Add touch support
+            let touchStartX = 0;
+            let touchEndX = 0;
 
-                // Create new image if it doesn't exist
-                let currentImage = carousel.querySelector(`img[src="${imageData[currentIndex].path}"]`);
-                if (!currentImage) {
-                    currentImage = document.createElement('img');
-                    currentImage.src = imageData[currentIndex].path;
-                    currentImage.alt = "Image";
-                    carousel.appendChild(currentImage);
+            carousel.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            carousel.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
                 }
+            }
 
-                // Add active class to current image
-                currentImage.classList.add('active');
+            function updateCarousel() {
+                carousel.innerHTML = `<img src="${imageData[currentIndex].path}" alt="Image">`;
                 imageTitle.textContent = imageData[currentIndex].title;
+                indicatorsContainer.innerHTML = '';
+
+                imageData.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('indicator');
+                    if (index === currentIndex) indicator.classList.add('active');
+                    indicator.addEventListener('click', () => goToSlide(index));
+                    indicatorsContainer.appendChild(indicator);
+                });
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateCarousel();
             }
 
             function nextSlide() {
