@@ -18,6 +18,8 @@
             animation: gradientBG 15s ease infinite;
             background: linear-gradient(-45deg, #FFF0F5, #FFE4E1, #FFB6C1, #FFC0CB);
             background-size: 400% 400%;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         @keyframes gradientBG {
@@ -28,33 +30,55 @@
 
         .carousel-container {
             width: 100%;
-            max-width: 650px;
+            max-width: 100%;
             position: relative;
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             background-color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .image-title {
             text-align: center;
-            padding: 15px 0;
-            background-color: #FFF5EE;
+            padding: clamp(10px, 2vw, 20px);
+            background-color: white;
             color: #FF69B4;
             font-weight: 600;
-            font-size: 18px;
+            font-size: clamp(14px, 4vw, 24px);
             letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .carousel {
+            flex: 1;
             display: flex;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
         .carousel img {
-            min-width: 100%;
-            height: 450px;
-            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            background-color: white;
+        }
+
+        .carousel img.active {
+            opacity: 1;
         }
 
         .carousel-controls {
@@ -64,16 +88,18 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            padding: 0 15px;
+            padding: 0 clamp(10px, 2vw, 20px);
             box-sizing: border-box;
+            pointer-events: none;
+            z-index: 10;
         }
 
         .control-btn {
             background: rgba(199, 21, 133, 0.7);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: clamp(30px, 8vw, 50px);
+            height: clamp(30px, 8vw, 50px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -84,6 +110,8 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+            pointer-events: auto;
+            font-size: clamp(16px, 4vw, 24px);
         }
 
         .control-btn::before {
@@ -142,32 +170,43 @@
             }
         }
 
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-            background-color: #FFF5EE;
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 90vh;
+            }
+            
+            .image-title {
+                font-size: clamp(12px, 3vw, 18px);
+                padding: clamp(8px, 1.5vw, 15px);
+            }
         }
 
-        .indicator {
-            width: 10px;
-            height: 10px;
-            background-color: #FFB6C1;
-            border-radius: 50%;
-            margin: 0 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        @media (max-width: 480px) {
+            .carousel-container {
+                height: 100vh;
+            }
+            
+            .image-title {
+                font-size: clamp(10px, 2.5vw, 16px);
+                padding: clamp(6px, 1vw, 12px);
+            }
         }
 
-        .indicator.active {
-            width: 20px;
-            background-color: #FF69B4;
-            border-radius: 10px;
+        @media (min-width: 1200px) {
+            .carousel-container {
+                max-width: 800px;
+            }
         }
 
-        @media (max-width: 680px) {
-            .carousel img {
-                height: 300px;
+        @media (prefers-reduced-motion: reduce) {
+            .carousel,
+            .control-btn,
+            .indicator {
+                transition: none;
+            }
+
+            body {
+                animation: none;
             }
         }
     </style>
@@ -305,7 +344,6 @@
             <button class="control-btn prev-btn">&#9665;</button>
             <button class="control-btn next-btn">&#9655;</button>
         </div>
-        <div class="carousel-indicators"></div>
     </div>
     
     <script>
@@ -313,37 +351,98 @@
             const carousel = document.querySelector('.carousel');
             const prevBtn = document.querySelector('.prev-btn');
             const nextBtn = document.querySelector('.next-btn');
-            const indicatorsContainer = document.querySelector('.carousel-indicators');
             const imageTitle = document.querySelector('.image-title');
 
-            // List of images (replace with actual paths)
-            const imagePaths = [];
-            for (let i = 1; i <= 62; i++) {
-                imagePaths.push(`kyran/kyran (${i}).jpg`);
-            }
+            // List of images with their titles (cleaned up to remove duplicates)
+            const imageData = [
+                { path: 'kyran/kyran (1).jpg', title: 'Wow museo hehe' },
+                { path: 'kyran/kyran (2).jpg', title: 'Love look at me' },
+                { path: 'kyran/kyran (3).jpg', title: 'Ngi' },
+                { path: 'kyran/kyran (4).jpg', title: 'oh pak ayos pose' },
+                { path: 'kyran/kyran (5).jpg', title: 'im so papansin' },
+                { path: 'kyran/kyran (6).jpg', title: 'hehe Little Doggie' },
+                { path: 'kyran/kyran (7).jpg', title: 'Me singing' },
+                { path: 'kyran/kyran (8).jpg', title: 'Shala mirror shot, idol kita love' },
+                { path: 'kyran/kyran (9).jpg', title: 'Ayan paaaa pakk sige' },
+                { path: 'kyran/kyran (10).jpg', title: 'ewwwww mirror shit' },
+                { path: 'kyran/kyran (11).jpg', title: 'Birds Eye View kuno hays' },
+                { path: 'kyran/kyran (12).jpg', title: 'Bidyuki' },
+                { path: 'kyran/kyran (13).jpg', title: 'Bidyuukii part 2' },
+                { path: 'kyran/kyran (14).jpg', title: 'Putographer' },
+                { path: 'kyran/kyran (15).jpg', title: 'Oh shala OJT si anteh' },
+                { path: 'kyran/kyran (16).jpg', title: 'Pak sipag-sipagan' },
+                { path: 'kyran/kyran (17).jpg', title: 'Ayan paaaa pakk sige' },
+                { path: 'kyran/kyran (18).jpg', title: 'Di na natapos sigee kyran' },
+                { path: 'kyran/kyran (19).jpg', title: 'WOWWW DAMIII' },
+                { path: 'kyran/kyran (20).jpg', title: 'I have an infection sa mata diyan' },
+                { path: 'kyran/kyran (21).jpg', title: 'Ayan laptop shot naman hays kapiling' },
+                { path: 'kyran/kyran (22).jpg', title: 'Precious Smiles' },
+                { path: 'kyran/kyran (23).jpg', title: 'LABOOOO' },
+                { path: 'kyran/kyran (24).jpg', title: 'Joyful Days' },
+                { path: 'kyran/kyran (25).jpg', title: 'Happy Smiles' },
+                { path: 'kyran/kyran (26).jpg', title: 'Love look fitting room mwehhehe' },
+                { path: 'kyran/kyran (27).jpg', title: 'Ang labo nanaman sige' },
+                { path: 'kyran/kyran (28).jpg', title: 'Baby look at me ha not Dustin mwaa' },
+                { path: 'kyran/kyran (29).jpg', title: 'Ayan sige labo nanaman di na natapos' },
+                { path: 'kyran/kyran (30).jpg', title: 'Look at Avy' },
+                { path: 'kyran/kyran (31).jpg', title: 'LOOK ETO PAA' },
+                { path: 'kyran/kyran (32).jpg', title: 'hI SIR AHHAHA' },
+                { path: 'kyran/kyran (33).jpg', title: 'First time moko namiss here hays' },
+                { path: 'kyran/kyran (34).jpg', title: 'Yiee namiss niya ko' },
+                { path: 'kyran/kyran (35).jpg', title: 'Yiee crusshh mo na talaga ako nohhhh' },
+                { path: 'kyran/kyran (36).jpg', title: 'Wowipop' },
+                { path: 'kyran/kyran (37).jpg', title: 'Yan skyranch mwehhe' },
+                { path: 'kyran/kyran (38).jpg', title: 'sa mcdo pa talaga nag mirror shot' },
+                { path: 'kyran/kyran (39).jpg', title: 'Baby oh bday ko hehe' },
+                { path: 'kyran/kyran (40).jpg', title: 'Pak magsawa ka sa face ko' },
+                { path: 'kyran/kyran (41).jpg', title: 'Wow nagalulu ata ako diyan HHAHAH' },
+                { path: 'kyran/kyran (42).jpg', title: 'Yan mirror shot ulit hay nako puro mirror shot nalang' },
+                { path: 'kyran/kyran (43).jpg', title: 'Me tekken' },
+                { path: 'kyran/kyran (44).jpg', title: 'Napindot hehe' },
+                { path: 'kyran/kyran (45).jpg', title: 'This is new year ata hehe' },
+                { path: 'kyran/kyran (46).jpg', title: 'Wow angas' },
+                { path: 'kyran/kyran (47).jpg', title: 'Gym me gym' },
+                { path: 'kyran/kyran (48).jpg', title: 'Lala ang labo ' },
+                { path: 'kyran/kyran (49).jpg', title: 'Wow tagilid' },
+                { path: 'kyran/kyran (50).jpg', title: 'hehe bday nung anak ni engr.' },
+                { path: 'kyran/kyran (51).jpg', title: 'Wow suit' },
+                { path: 'kyran/kyran (52).jpg', title: 'HAHAHAHAHAH shh' },
+                { path: 'kyran/kyran (53).jpg', title: 'Jusko ang bata' },
+                { path: 'kyran/kyran (54).jpg', title: 'Ayan mga walang ngipin' },
+                { path: 'kyran/kyran (55).jpg', title: 'Wow abs' },
+                { path: 'kyran/kyran (56).jpg', title: 'WOW SMILE AHHAHA' },
+                { path: 'kyran/kyran (57).jpg', title: 'wOW SENGFIEE' },
+                { path: 'kyran/kyran (58).jpg', title: 'lOOK MY MOMM' },
+                { path: 'kyran/kyran (59).jpg', title: 'Happy bday to me hehe' },
+                { path: 'kyran/kyran (60).jpg', title: 'Kunwari diko alam hehe' },
+                { path: 'kyran/kyran (61).jpg', title: 'Yan yung profile ko sa titer' },
+                { path: 'kyran/kyran (62).jpg', title: 'WOW so wet AHHAHAH' }
+            ];
 
             let currentIndex = 0;
+            const totalImages = imageData.length;
 
             function updateCarousel() {
-                carousel.innerHTML = `<img src="${imagePaths[currentIndex]}" alt="Image">`;
-                indicatorsContainer.innerHTML = '';
+                // Remove active class from all images
+                const images = carousel.querySelectorAll('img');
+                images.forEach(img => img.classList.remove('active'));
 
-                imagePaths.forEach((_, index) => {
-                    const indicator = document.createElement('div');
-                    indicator.classList.add('indicator');
-                    if (index === currentIndex) indicator.classList.add('active');
-                    indicator.addEventListener('click', () => goToSlide(index));
-                    indicatorsContainer.appendChild(indicator);
-                });
-            }
+                // Create new image if it doesn't exist
+                let currentImage = carousel.querySelector(`img[src="${imageData[currentIndex].path}"]`);
+                if (!currentImage) {
+                    currentImage = document.createElement('img');
+                    currentImage.src = imageData[currentIndex].path;
+                    currentImage.alt = "Image";
+                    carousel.appendChild(currentImage);
+                }
 
-            function goToSlide(index) {
-                currentIndex = index;
-                updateCarousel();
+                // Add active class to current image
+                currentImage.classList.add('active');
+                imageTitle.textContent = imageData[currentIndex].title;
             }
 
             function nextSlide() {
-                currentIndex = (currentIndex + 1) % imagePaths.length;
+                currentIndex = (currentIndex + 1) % totalImages;
                 updateCarousel();
             }
 
@@ -354,7 +453,7 @@
 
             prevBtn.addEventListener('click', prevSlide);
             nextBtn.addEventListener('click', nextSlide);
-            setInterval(nextSlide, 5000);
+            setInterval(nextSlide, 8000);
             updateCarousel();
         });
     </script>
