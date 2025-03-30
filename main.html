@@ -11,9 +11,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             min-height: 100vh;
             margin: 0;
             font-family: 'Poppins', sans-serif;
+            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(-45deg, #FFF0F5, #FFE4E1, #FFB6C1, #FFC0CB);
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .carousel-container {
@@ -38,10 +48,10 @@
 
         .carousel {
             display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: transform 0.6s ease-in-out;
         }
 
-        .carousel-image {
+        .carousel img {
             min-width: 100%;
             height: 450px;
             object-fit: cover;
@@ -69,12 +79,67 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .control-btn:hover {
             background: rgba(199, 21, 133, 0.9);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.5);
+        }
+
+        .control-btn:hover::before {
+            opacity: 1;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .control-btn.prev-btn {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        .control-btn.next-btn {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .carousel-indicators {
@@ -101,9 +166,8 @@
         }
 
         @media (max-width: 680px) {
-            .carousel-container {
-                max-width: 95%;
-                margin: 0 10px;
+            .carousel img {
+                height: 300px;
             }
         }
     </style>
@@ -112,6 +176,7 @@
     <div class="carousel-container">
         <div class="image-title">Dreamy Landscapes</div>
         <div class="carousel">
+            <!-- Images will be inserted here dynamically -->
             <img src="kyran/kyran (1).jpeg" alt="me">
             <img src="kyran/kyran (1).jpg" alt="me">
             <img src="kyran/kyran (1).png" alt="me">
@@ -121,232 +186,155 @@
             <img src="kyran/kyran (11).jpeg" alt="me">
             <img src="kyran/kyran (11).jpg" alt="me">
             <img src="kyran/kyran (12).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
-            <img src="kyran/kyran (1).jpeg" alt="me">
+            <img src="kyran/kyran (12).jpg" alt="me">
+            <img src="kyran/kyran (13).jpeg" alt="me">
+            <img src="kyran/kyran (13).jpg" alt="me">
+            <img src="kyran/kyran (14).jpeg" alt="me">
+            <img src="kyran/kyran (14).jpg" alt="me">
+            <img src="kyran/kyran (15).jpeg" alt="me">
+            <img src="kyran/kyran (15).jpg" alt="me">
+            <img src="kyran/kyran (16).jpeg" alt="me">
+            <img src="kyran/kyran (16).jpg" alt="me">
+            <img src="kyran/kyran (17).jpeg" alt="me">
+            <img src="kyran/kyran (17).jpg" alt="me">
+            <img src="kyran/kyran (18).jpeg" alt="me">
+            <img src="kyran/kyran (18).jpg" alt="me">
+            <img src="kyran/kyran (19).jpeg" alt="me">
+            <img src="kyran/kyran (19).jpg" alt="me">
+            <img src="kyran/kyran (2).jpeg" alt="me">
+            <img src="kyran/kyran (2).jpg" alt="me">
+
+            <img src="kyran/kyran (20).jpeg" alt="me">
+            <img src="kyran/kyran (20).jpg" alt="me">
+            <img src="kyran/kyran (21).jpeg" alt="me">
+            <img src="kyran/kyran (21).jpg" alt="me">
+            <img src="kyran/kyran (22).jpeg" alt="me">
+            <img src="kyran/kyran (22).jpg" alt="me">
+            <img src="kyran/kyran (23).jpeg" alt="me">
+            <img src="kyran/kyran (23).jpg" alt="me">
+            <img src="kyran/kyran (24).jpeg" alt="me">
+            <img src="kyran/kyran (24).jpg" alt="me">
+            <img src="kyran/kyran (25).jpeg" alt="me">
+            <img src="kyran/kyran (25).jpg" alt="me">
+            <img src="kyran/kyran (26).jpeg" alt="me">
+            <img src="kyran/kyran (26).jpg" alt="me">
+            <img src="kyran/kyran (27).jpeg" alt="me">
+            <img src="kyran/kyran (27).jpg" alt="me">
+            <img src="kyran/kyran (28).jpeg" alt="me">
+            <img src="kyran/kyran (28).jpg" alt="me">
+            <img src="kyran/kyran (29).jpeg" alt="me">
+            <img src="kyran/kyran (29).jpg" alt="me">
+            <img src="kyran/kyran (3).jpeg" alt="me">
+            <img src="kyran/kyran (3).jpg" alt="me">
+
+            <img src="kyran/kyran (30).jpeg" alt="me">
+            <img src="kyran/kyran (30).jpg" alt="me">
+            <img src="kyran/kyran (31).jpeg" alt="me">
+            <img src="kyran/kyran (31).jpg" alt="me">
+            <img src="kyran/kyran (32).jpeg" alt="me">
+            <img src="kyran/kyran (32).jpg" alt="me">
+            <img src="kyran/kyran (33).jpeg" alt="me">
+            <img src="kyran/kyran (33).jpg" alt="me">
+            <img src="kyran/kyran (34).jpeg" alt="me">
+            <img src="kyran/kyran (34).jpg" alt="me">
+            <img src="kyran/kyran (35).jpeg" alt="me">
+            <img src="kyran/kyran (35).jpg" alt="me">
+            <img src="kyran/kyran (36).jpeg" alt="me">
+            <img src="kyran/kyran (36).jpg" alt="me">
+            <img src="kyran/kyran (37).jpeg" alt="me">
+            <img src="kyran/kyran (37).jpg" alt="me">
+            <img src="kyran/kyran (38).jpeg" alt="me">
+            <img src="kyran/kyran (38).jpg" alt="me">
+            <img src="kyran/kyran (39).jpeg" alt="me">
+            <img src="kyran/kyran (39).jpg" alt="me">
+            <img src="kyran/kyran (4).jpeg" alt="me">
+            <img src="kyran/kyran (4).jpg" alt="me">
+
+            <img src="kyran/kyran (40).jpeg" alt="me">
+            <img src="kyran/kyran (40).jpg" alt="me">
+            <img src="kyran/kyran (41).jpeg" alt="me">
+            <img src="kyran/kyran (41).jpg" alt="me">
+            <img src="kyran/kyran (42).jpeg" alt="me">
+            <img src="kyran/kyran (42).jpg" alt="me">
+            <img src="kyran/kyran (43).jpeg" alt="me">
+            <img src="kyran/kyran (43).jpg" alt="me">
+            <img src="kyran/kyran (44).jpeg" alt="me">
+            <img src="kyran/kyran (44).jpg" alt="me">
+            <img src="kyran/kyran (45).jpeg" alt="me">
+            <img src="kyran/kyran (45).jpg" alt="me">
+            <img src="kyran/kyran (46).jpeg" alt="me">
+            <img src="kyran/kyran (46).jpg" alt="me">
+            <img src="kyran/kyran (47).jpeg" alt="me">
+            <img src="kyran/kyran (47).jpg" alt="me">
+            <img src="kyran/kyran (48).jpeg" alt="me">
+            <img src="kyran/kyran (48).jpg" alt="me">
+            <img src="kyran/kyran (49).jpeg" alt="me">
+            <img src="kyran/kyran (49).jpg" alt="me">
+            <img src="kyran/kyran (5).jpeg" alt="me">
+            <img src="kyran/kyran (5).jpg" alt="me">
 
 
+            <img src="kyran/kyran (50).jpeg" alt="me">
+            <img src="kyran/kyran (50).jpg" alt="me">
+            <img src="kyran/kyran (51).jpeg" alt="me">
+            <img src="kyran/kyran (51).jpg" alt="me">
 
+            <img src="kyran/kyran (52).jpg" alt="me">
 
+            <img src="kyran/kyran (53).jpg" alt="me">
 
+            <img src="kyran/kyran (54).jpg" alt="me">
 
+            <img src="kyran/kyran (55).jpg" alt="me">
 
+            <img src="kyran/kyran (56).jpg" alt="me">
+
+            <img src="kyran/kyran (57).jpg" alt="me">
+
+            <img src="kyran/kyran (58).jpg" alt="me">
+
+            <img src="kyran/kyran (59).jpg" alt="me">
+            <img src="kyran/kyran (6).jpeg" alt="me">
+            <img src="kyran/kyran (6).jpg" alt="me">
+  
+            <img src="kyran/kyran (60).jpg" alt="me">
+            <img src="kyran/kyran (61).jpg" alt="me">
+            <img src="kyran/kyran (62).jpg" alt="me">
         </div>
-
         <div class="carousel-controls">
-            <button class="control-btn prev-btn">←</button>
-            <button class="control-btn next-btn">→</button>
+            <button class="control-btn prev-btn">&#9665;</button>
+            <button class="control-btn next-btn">&#9655;</button>
         </div>
-
         <div class="carousel-indicators"></div>
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const carousel = document.querySelector('.carousel'); 
-            const images = document.querySelectorAll('.carousel-image');
+            const carousel = document.querySelector('.carousel');
             const prevBtn = document.querySelector('.prev-btn');
             const nextBtn = document.querySelector('.next-btn');
             const indicatorsContainer = document.querySelector('.carousel-indicators');
             const imageTitle = document.querySelector('.image-title');
 
-            // Slide titles corresponding to images
-            const slideTitles = [
-                // This would the titles of the images
-            ];
+            // List of images (replace with actual paths)
+            const imagePaths = [];
+            for (let i = 1; i <= 62; i++) {
+                imagePaths.push(`kyran/kyran (${i}).jpg`);
+            }
 
             let currentIndex = 0;
-            const totalImages = images.length;
-
-            // Create indicators
-            images.forEach((_, index) => {
-                const indicator = document.createElement('div');
-                indicator.classList.add('indicator');
-                if (index === 0) indicator.classList.add('active');
-                indicator.addEventListener('click', () => goToSlide(index));
-                indicatorsContainer.appendChild(indicator);
-            });
-
-            const indicators = document.querySelectorAll('.indicator');
 
             function updateCarousel() {
-                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-                
-                // Update indicators
-                indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === currentIndex);
-                });
+                carousel.innerHTML = `<img src="${imagePaths[currentIndex]}" alt="Image">`;
+                indicatorsContainer.innerHTML = '';
 
-                // Update title
-                imageTitle.textContent = slideTitles[currentIndex];
+                imagePaths.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('indicator');
+                    if (index === currentIndex) indicator.classList.add('active');
+                    indicator.addEventListener('click', () => goToSlide(index));
+                    indicatorsContainer.appendChild(indicator);
+                });
             }
 
             function goToSlide(index) {
@@ -355,7 +343,7 @@
             }
 
             function nextSlide() {
-                currentIndex = (currentIndex + 1) % totalImages;
+                currentIndex = (currentIndex + 1) % imagePaths.length;
                 updateCarousel();
             }
 
@@ -364,12 +352,10 @@
                 updateCarousel();
             }
 
-            // Event listeners for navigation buttons
-            nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
-
-            // Optional: Auto-slide every 5 seconds
+            nextBtn.addEventListener('click', nextSlide);
             setInterval(nextSlide, 5000);
+            updateCarousel();
         });
     </script>
 </body>
